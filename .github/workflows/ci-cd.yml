@@ -10,9 +10,6 @@ on:
       - main
 
 jobs:
-  # ─────────────────────────────────────────
-  # JOB 1: Install, Test & Build
-  # ─────────────────────────────────────────
   build-and-test:
     name: Build & Test
     runs-on: ubuntu-latest
@@ -45,10 +42,6 @@ jobs:
           path: build/
           retention-days: 7
 
-  # ─────────────────────────────────────────
-  # JOB 2: Deploy lên GitHub Pages
-  # Chỉ chạy khi merge/push thẳng vào main
-  # ─────────────────────────────────────────
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
