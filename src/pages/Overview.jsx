@@ -193,13 +193,6 @@ const Overview = () => {
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <Link
-                to="/register"
-                className="btn-gradient px-8 py-4 rounded-xl font-headline font-bold text-sm no-underline flex items-center gap-2"
-              >
-                <span className="material-symbols-outlined text-lg">rocket_launch</span>
-                Get Started
-              </Link>
-              <Link
                 to="#"
                 className="btn-outlined px-8 py-4 rounded-xl font-headline font-semibold text-sm no-underline flex items-center gap-2"
               >
