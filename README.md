@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+# The Intelligence Ledger — Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the React frontend for **The Intelligence Ledger** — a CV Scanning & JD Matching platform.
+
+## Overview
+This application provides two distinct workflows based on user roles:
+- **Admin / HR**: Upload Job Descriptions (JDs), manage job campaigns, and view candidate matching analytics.
+- **Employee / Candidate**: Upload their CV and view instantaneous AI-driven match results against available jobs.
+
+## Tech Stack
+- **React 18**
+- **React Router v6**
+- **Tailwind CSS v3** (with custom color tokens and typography)
+- **Axios**
+
+---
+
+## 🛠 Testing the UI (Dev Mode)
+
+The application is currently configured in **Dev Mode** (`DEV_MODE = true` in `AuthContext.js`). This mocks the backend authentication API, allowing you to easily test the UI for both roles without needing a running backend.
+
+### How to test:
+1. Start the development server (`npm start`).
+2. Navigate to [http://localhost:3000/login](http://localhost:3000/login).
+3. Use one of the following mock accounts to sign in:
+
+#### 🧑‍💼 Test Account 1: Employee
+- **Email:** `employee@company.com`
+- **Password:** `password`
+- **What you'll see:** The navigation will restrict you to `Overview`, `Job List`, `CV Upload`, and `Matching`.
+
+#### 👔 Test Account 2: Admin / HR
+- **Email:** `admin@company.com`
+- **Password:** `password`
+- **What you'll see:** The navigation will restrict you to `Overview`, `Job List`, `JD Upload`, and `Matching`.
+
+---
 
 ## Available Scripts
 
 In the project directory, you can run:
 
 ### `npm start`
-
-Runs the app in the development mode.\
+Runs the app in development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
 ### `npm run build`
-
-Builds the app for production to the `build` folder.\
+Builds the app for production to the `build` folder.
 It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
