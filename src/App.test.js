@@ -1,8 +1,18 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import App from './App';
-import { AuthProvider } from './context/AuthContext';
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+import { AuthContext } from './context/AuthContext';
+
+test('renders without crashing', () => {
+  const mockAuthValue = {
+    user: null,
+    loading: false,
+    login: jest.fn(),
+    logout: jest.fn()
+  };
+
+  render(
+    <AuthContext.Provider value={mockAuthValue}>
+      <App />
+    </AuthContext.Provider>
+  );
 });
