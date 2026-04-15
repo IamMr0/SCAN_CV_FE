@@ -27,7 +27,7 @@ const PrivateRoute = ({ children, adminOnly = false, employeeOnly = false }) => 
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/register" replace />;
   }
 
   if (adminOnly && !isAdmin) {
@@ -65,13 +65,15 @@ function App() {
           element={<Register />}
         />
 
-        {/* Public route with nav/footer */}
+        {/* Protected route with nav/footer */}
         <Route
           path="/"
           element={
-            <AppLayout>
-              <Overview />
-            </AppLayout>
+            <PrivateRoute>
+              <AppLayout>
+                <Overview />
+              </AppLayout>
+            </PrivateRoute>
           }
         />
 
@@ -124,7 +126,7 @@ function App() {
         />
 
         {/* Catch-all */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/register" replace />} />
       </Routes>
     </Router>
   );
