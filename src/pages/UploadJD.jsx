@@ -42,7 +42,6 @@ const sampleJDs = [
 const UploadJD = () => {
   const [jdText, setJdText] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
-  const [activeTab, setActiveTab] = useState('upload');
   const [jdTab, setJdTab] = useState('active');
   const [notificationsOn, setNotificationsOn] = useState(true);
   const [processing, setProcessing] = useState(false);
@@ -67,12 +66,6 @@ const UploadJD = () => {
     setTimeout(() => setProcessing(false), 2000);
   };
 
-  const tabs = [
-    { id: 'overview', label: 'Overview' },
-    { id: 'upload', label: 'JD Upload' },
-    { id: 'history', label: 'History' },
-  ];
-
   return (
     <div className="min-h-screen bg-background pb-24 md:pb-8">
       {/* Header */}
@@ -81,21 +74,6 @@ const UploadJD = () => {
           <div>
             <h1 className="font-headline font-extrabold text-3xl text-on-surface">Job Descriptions</h1>
             <p className="text-on-surface-variant text-sm font-body mt-1">Manage and process job description campaigns</p>
-          </div>
-          <div className="flex items-center gap-2">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2 rounded-xl text-sm font-headline font-semibold transition-all cursor-pointer border-none ${
-                  activeTab === tab.id
-                    ? 'bg-primary text-on-primary'
-                    : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
           </div>
         </div>
       </div>

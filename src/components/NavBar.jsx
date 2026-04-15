@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const NavBar = () => {
   const { pathname } = useLocation();
   const { isAuthenticated, user, logout } = useAuth();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Role-based navigation:
   // Employee  → Overview, Job List, CV Upload, Matching
@@ -98,42 +97,8 @@ const NavBar = () => {
                 Sign In
               </Link>
             )}
-            {/* Mobile hamburger */}
-            <button
-              className="md:hidden w-10 h-10 rounded-xl flex items-center justify-center hover:bg-surface-container-high transition-colors"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              <span className="material-symbols-outlined text-on-surface">
-                {mobileMenuOpen ? 'close' : 'menu'}
-              </span>
-            </button>
           </div>
         </div>
-
-        {/* Mobile dropdown menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden mt-3 pb-3 border-t border-outline-variant/20 pt-3">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.path;
-              return (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-headline font-semibold transition-all no-underline ${
-                    isActive
-                      ? 'text-primary bg-primary-fixed/40'
-                      : 'text-on-surface/60 hover:text-on-surface hover:bg-surface-container-high/50'
-                  }`}
-                >
-                  <span className="material-symbols-outlined text-xl">{link.icon}</span>
-                  {link.label}
-                </Link>
-              );
-            })}
-          </div>
-        )}
       </nav>
 
       {/* Mobile Bottom Nav */}
