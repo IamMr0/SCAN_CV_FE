@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 
 const sampleJDs = [
   {
@@ -41,26 +41,15 @@ const sampleJDs = [
 
 const UploadJD = () => {
   const [jdText, setJdText] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [jobTitle, setJobTitle] = useState('');
+  const [workLocation, setWorkLocation] = useState('');
+  const [department, setDepartment] = useState('');
   const [jdTab, setJdTab] = useState('active');
   const [notificationsOn, setNotificationsOn] = useState(true);
   const [processing, setProcessing] = useState(false);
-  const fileInputRef = useRef(null);
-
-  const handleFileSelect = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const validTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-      if (validTypes.includes(file.type)) {
-        setSelectedFile(file);
-      } else {
-        alert('Please select a PDF or DOCX file.');
-      }
-    }
-  };
 
   const handleProcess = async () => {
-    if (!jdText && !selectedFile) return;
+    if (!jdText || !jobTitle || !workLocation || !department) return;
     setProcessing(true);
     // Simulate processing
     setTimeout(() => setProcessing(false), 2000);
@@ -91,7 +80,42 @@ const UploadJD = () => {
                 </span>
               </div>
 
+              {/* Form Inputs */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-headline font-bold text-on-surface mb-2">Job Title</label>
+                  <input
+                    type="text"
+                    value={jobTitle}
+                    onChange={(e) => setJobTitle(e.target.value)}
+                    placeholder="e.g. Lead Product Designer"
+                    className="w-full px-4 py-3 rounded-xl border border-outline-variant bg-surface-container-lowest text-on-surface text-sm font-body focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition-all"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-headline font-bold text-on-surface mb-2">Work Location</label>
+                  <input
+                    type="text"
+                    value={workLocation}
+                    onChange={(e) => setWorkLocation(e.target.value)}
+                    placeholder="e.g. New York, Remote"
+                    className="w-full px-4 py-3 rounded-xl border border-outline-variant bg-surface-container-lowest text-on-surface text-sm font-body focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition-all"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-headline font-bold text-on-surface mb-2">Department</label>
+                  <input
+                    type="text"
+                    value={department}
+                    onChange={(e) => setDepartment(e.target.value)}
+                    placeholder="e.g. UX Studio"
+                    className="w-full px-4 py-3 rounded-xl border border-outline-variant bg-surface-container-lowest text-on-surface text-sm font-body focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition-all"
+                  />
+                </div>
+              </div>
+
               {/* Textarea */}
+              <label className="block text-sm font-headline font-bold text-on-surface mb-2">Job Description</label>
               <textarea
                 value={jdText}
                 onChange={(e) => setJdText(e.target.value)}
@@ -99,41 +123,12 @@ const UploadJD = () => {
                 className="w-full h-64 px-5 py-4 rounded-2xl border border-outline-variant bg-surface-container-lowest text-on-surface text-sm font-body resize-none focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition-all leading-relaxed"
               />
 
-              {/* File chip */}
-              {selectedFile && (
-                <div className="mt-3 inline-flex items-center gap-2 bg-primary-fixed/40 text-primary px-4 py-2 rounded-xl text-sm font-body">
-                  <span className="material-symbols-outlined text-lg">description</span>
-                  {selectedFile.name}
-                  <button
-                    onClick={() => setSelectedFile(null)}
-                    className="ml-1 hover:text-error transition-colors cursor-pointer bg-transparent border-none text-primary"
-                    aria-label="Remove file"
-                  >
-                    <span className="material-symbols-outlined text-lg">close</span>
-                  </button>
-                </div>
-              )}
-
               {/* Action Buttons */}
               <div className="flex flex-wrap gap-4 mt-6">
                 <button
-                  onClick={() => fileInputRef.current?.click()}
-                  className="flex items-center gap-3 px-6 py-3.5 rounded-xl border-2 border-dashed border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary transition-all cursor-pointer bg-transparent font-headline font-semibold text-sm"
-                >
-                  <span className="material-symbols-outlined text-xl">upload_file</span>
-                  Choose File (PDF, DOCX)
-                </button>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept=".pdf,.docx"
-                  onChange={handleFileSelect}
-                  className="hidden"
-                />
-                <button
                   onClick={handleProcess}
-                  disabled={processing || (!jdText && !selectedFile)}
-                  className="btn-gradient flex items-center gap-3 px-6 py-3.5 rounded-xl font-headline font-bold text-sm disabled:opacity-50"
+                  disabled={processing || !jdText || !jobTitle || !workLocation || !department}
+                  className="btn-gradient flex items-center gap-3 px-6 py-3.5 rounded-xl font-headline font-bold text-sm disabled:opacity-50 ml-auto"
                 >
                   {processing ? (
                     <span className="material-symbols-outlined animate-spin text-xl">progress_activity</span>
