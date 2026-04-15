@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 
 const matchResults = [
   { candidate: 'Dr. Julian Thorne', role: 'Systems Architect', jd: 'Principal Systems Architect', score: 98.4, status: 'Excellent' },
@@ -9,6 +9,16 @@ const matchResults = [
 ];
 
 const Matching = () => {
+  const [selectedJob, setSelectedJob] = useState('All Jobs');
+
+  const filteredResults = useMemo(() => {
+    let results = [...matchResults];
+    if (selectedJob !== 'All Jobs') {
+      results = results.filter(r => r.jd === selectedJob);
+    }
+    return results.sort((a, b) => b.score - a.score);
+  }, [selectedJob]);
+
   return (
     <div className="min-h-screen bg-background pb-24 md:pb-8">
       {/* Header */}
@@ -39,11 +49,24 @@ const Matching = () => {
 
         {/* Match Results Table */}
         <div className="bg-surface-container-lowest rounded-3xl overflow-hidden">
-          <div className="px-8 py-6 border-b border-outline-variant/20 flex items-center justify-between">
-            <h2 className="font-headline font-bold text-lg text-on-surface">Recent Match Results</h2>
-            <span className="bg-primary-fixed text-primary text-xs font-headline font-bold px-3 py-1 rounded-full">
-              {matchResults.length} results
-            </span>
+          <div className="px-8 py-6 border-b border-outline-variant/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <h2 className="font-headline font-bold text-lg text-on-surface">Recent Match Results</h2>
+              <span className="bg-primary-fixed text-primary text-xs font-headline font-bold px-3 py-1 rounded-full">
+                {filteredResults.length} results
+              </span>
+            </div>
+            <div>
+              <select
+                value={selectedJob}
+                onChange={(e) => setSelectedJob(e.target.value)}
+                className="px-4 py-2 bg-white rounded-xl border border-outline-variant/50 text-on-surface text-sm font-body outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all cursor-pointer"
+              >
+                {['All Jobs', ...Array.from(new Set(matchResults.map(r => r.jd)))].map(job => (
+                  <option key={job} value={job}>{job}</option>
+                ))}
+              </select>
+            </div>
           </div>
 
           {/* Table Header */}
@@ -56,11 +79,11 @@ const Matching = () => {
           </div>
 
           {/* Rows */}
-          {matchResults.map((result, i) => (
+          {filteredResults.map((result, i) => (
             <div
               key={i}
               className={`grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 items-center px-8 py-5 hover:bg-surface-container-high/50 transition-all cursor-pointer group ${
-                i !== matchResults.length - 1 ? 'border-b border-outline-variant/10' : ''
+                i !== filteredResults.length - 1 ? 'border-b border-outline-variant/10' : ''
               }`}
             >
               {/* Candidate */}

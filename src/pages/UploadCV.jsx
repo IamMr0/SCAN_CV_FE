@@ -20,6 +20,14 @@ const sampleResult = {
   summary: 'Candidate demonstrates exceptional technical depth across distributed systems architecture, cloud-native paradigms, and enterprise-scale infrastructure design. Strong cultural alignment with collaborative, innovation-driven team environments. Leadership potential shows room for growth in cross-functional executive communication.',
 };
 
+const availableJobs = [
+  { id: 1, title: 'Principal Systems Architect' },
+  { id: 2, title: 'Lead Product Designer' },
+  { id: 3, title: 'Senior Data Engineer' },
+  { id: 4, title: 'DevOps Infrastructure Lead' },
+  { id: 5, title: 'Head of AI Research' },
+];
+
 const AnimatedCounter = ({ value, duration = 1200 }) => {
   const [count, setCount] = useState(0);
 
@@ -47,6 +55,7 @@ const AnimatedCounter = ({ value, duration = 1200 }) => {
 
 const UploadCV = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedJob, setSelectedJob] = useState('');
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [showResult, setShowResult] = useState(false);
@@ -91,6 +100,10 @@ const UploadCV = () => {
 
   const handleUpload = async () => {
     if (!selectedFile) return;
+    if (!selectedJob) {
+      alert('Please select a target role before initializing the analysis.');
+      return;
+    }
     setUploading(true);
     setUploadProgress(0);
 
@@ -127,6 +140,22 @@ const UploadCV = () => {
                 <h2 className="font-headline font-bold text-xl text-on-surface">Ingest Talent Data</h2>
               </div>
               <p className="text-on-surface-variant text-sm font-body mb-6">PDF, DOCX, or JSON supported</p>
+              {/* Job Selection */}
+              <div className="mb-6 relative">
+                <label className="block text-sm font-headline font-bold text-on-surface mb-2">Target Role</label>
+                <div className="relative w-full md:w-2/3">
+                  <select
+                    value={selectedJob}
+                    onChange={(e) => setSelectedJob(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl border border-outline-variant/50 bg-white text-on-surface text-sm font-body focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition-all cursor-pointer shadow-sm"
+                  >
+                    <option value="" disabled>Select an available position...</option>
+                    {availableJobs.map(job => (
+                      <option key={job.id} value={job.title}>{job.title}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
               {/* Drop Zone */}
               <div
