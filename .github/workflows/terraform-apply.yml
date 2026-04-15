@@ -15,10 +15,6 @@ on:
       - main
   workflow_dispatch:
 
-permissions:
-  contents: write
-  actions: write
-
 env:
   TF_CL_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -30,6 +26,10 @@ jobs:
     defaults:
       run:
         working-directory: ./infra
+
+    permissions:
+      contents: write
+      actions: write
 
     steps:
       - name: Checkout code
