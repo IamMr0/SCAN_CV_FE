@@ -60,4 +60,27 @@ export const uploadCV = (file, jdId) => {
 export const getMatchResult = (cvId) => api.get(`/cv/${cvId}/match`);
 export const getCurationHistory = () => api.get('/cv/history');
 
+// CV Upload — direct to CloudFront → S3 Bucket #2
+export const uploadCVToS3 = async (file, onProgress) => {
+  // Generate a unique filename to avoid collisions
+  const timestamp = Date.now();
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const key = `cv-uploads/${timestamp}_${safeName}`;
+
+  // Upload through CloudFront (same domain as our website)
+  const cloudFrontUrl = window.location.origin;
+
+  return axios.put(`${cloudFrontUrl}/${key}`, file, {
+    headers: {
+      'Content-Type': file.type,
+    },
+    onUploadProgress: (progressEvent) => {
+      if (onProgress && progressEvent.total) {
+        const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+        onProgress(percent);
+      }
+    },
+  });
+};
+
 export default api;

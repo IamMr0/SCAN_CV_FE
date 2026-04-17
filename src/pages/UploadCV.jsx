@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { uploadCVToS3 } from '../service/api';
 
 const sampleHistory = [
   { id: 1, name: 'Dr. Julian Thorne', role: 'Systems Architect', time: '2 hours ago', match: 98.4, avatar: 'JT' },
@@ -107,18 +108,20 @@ const UploadCV = () => {
     setUploading(true);
     setUploadProgress(0);
 
-    // Simulate upload progress
-    const interval = setInterval(() => {
-      setUploadProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setUploading(false);
-          setShowResult(true);
-          return 100;
-        }
-        return prev + Math.random() * 15;
+    try {
+      // Upload CV file through CloudFront → S3 Bucket #2
+      await uploadCVToS3(selectedFile, (progress) => {
+        setUploadProgress(progress);
       });
-    }, 200);
+
+      setUploading(false);
+      setShowResult(true);
+    } catch (error) {
+      console.error('Upload failed:', error);
+      alert('Upload failed. Please try again.');
+      setUploading(false);
+      setUploadProgress(0);
+    }
   };
 
   return (
